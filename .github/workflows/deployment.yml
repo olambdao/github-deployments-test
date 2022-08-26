@@ -23,4 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo 'production deployment'
+      - run: |
+          echo 'production deployment'
+          echo ${{ secrets.FOO }}
