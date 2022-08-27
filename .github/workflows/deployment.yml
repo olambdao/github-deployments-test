@@ -40,6 +40,15 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo 'dev deployment'
 
+  test-job:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'staging' }} 
+    steps:
+      - run: |
+          echo '${{ inputs.environment || 'staging' }} deployment'
+          echo ${{ secrets.FOO }}      
+
+
   # deploy-production:
   #   name: Deploy(Production)
   #   needs: deploy-dev
