@@ -1,2 +1,2 @@
 # github-deployments-test
-hello wold!
+Hello world!
