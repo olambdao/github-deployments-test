@@ -12,6 +12,7 @@ jobs:
         id: deployment
         with:
           step: start
+          env: ${{ github.event.deployment.environment }}
 
       - name: 'Deploy ${{ github.event.deployment.environment }}'
         run: |
@@ -23,5 +24,6 @@ jobs:
         with:
           step: finish
           status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}          
 
