@@ -5,6 +5,7 @@ on: ['deployment']
 jobs:
   deployment:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.deployment.environment }}
     steps:
       - uses: actions/checkout@v2
       - name: start deployment
