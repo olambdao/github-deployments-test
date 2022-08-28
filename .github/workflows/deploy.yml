@@ -5,9 +5,10 @@ on: ['deployment']
 jobs:
   deployment:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.deployment.environment }} 
     steps:
       - uses: actions/checkout@v2
-      - run: echo 'run tests'$a
       - name: 'Deploy ${{ github.event.deployment.environment }}'
         run: |
-          echo 'YOUR CODE HERE'      
+          echo 'YOUR CODE HERE'
+
