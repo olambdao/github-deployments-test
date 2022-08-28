@@ -5,10 +5,23 @@ on: ['deployment']
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.deployment.environment }} 
     steps:
       - uses: actions/checkout@v2
+      - name: start deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+
       - name: 'Deploy ${{ github.event.deployment.environment }}'
         run: |
-          echo 'YOUR CODE HERE'
+          echo ${{ secrets.FOO }}
+
+      - name: update deployment status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}          
 
