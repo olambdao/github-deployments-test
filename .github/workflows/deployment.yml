@@ -1,81 +1,28 @@
-name: Deployment
-
-on: 
-  push:
-    branches:
-      - master
-
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
-        default: staging
-        required: true    
-      sha:
-        description: "Git SHA to Build"
-        required: false
-        type: string
+name: Deploy
+on: deployment
 
 jobs:
-  test:
-    name: Test
+  deployment:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.deployment.environment }}
     steps:
       - uses: actions/checkout@v2
-      - run: echo 'run tests'
+      - name: start deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+          env: ${{ github.event.deployment.environment }}
 
-  print_env:
-    name: Print Environment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo 'sha is ${{ inputs.sha || github.sha }}'
+      - name: 'Deploy ${{ github.event.deployment.environment }}'
+        run: |
+          echo ${{ secrets.FOO }}
 
-  deploy-dev:
-    name: Deploy(Dev)
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo 'dev deployment'
-
-  test-job:
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment || 'staging' }} 
-    steps:
-      - run: |
-          echo '${{ inputs.environment || 'staging' }} deployment'
-          echo ${{ secrets.FOO }}      
-
-
-  # deploy-production:
-  #   name: Deploy(Production)
-  #   needs: deploy-dev
-  #   runs-on: ubuntu-latest
-  #   environment: ${{ inputs.environment || 'staging' }} 
-  #   steps:
-  #     # - name: start deployment
-  #     #   uses: bobheadxi/deployments@v1
-  #     #   id: deployment
-  #     #   with:
-  #     #     step: start
-  #     #     env: ${{ inputs.environment || 'staging' }}      
-
-  #     - uses: actions/checkout@v2
-  #     - run: |
-  #         echo '${{ inputs.environment || 'staging' }} deployment'
-  #         echo ${{ secrets.FOO }}
-
-  #     - uses: go-semantic-release/action@v1
-  #       with:
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}          
-
-  #     # - name: update deployment status
-  #     #   uses: bobheadxi/deployments@v1
-  #     #   if: always()
-  #     #   with:
-  #     #     step: finish
-  #     #     status: ${{ job.status }}
-  #     #     env: ${{ steps.deployment.outputs.env }}
-  #     #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}          
+      - name: update deployment status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}          

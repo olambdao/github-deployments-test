@@ -14,11 +14,11 @@ on:
         type: string
         
 jobs:
-  release:
+  create_deployment:
     runs-on: ubuntu-latest
     steps:
       - uses: avakar/create-deployment@v1
         with:
           auto_merge: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
