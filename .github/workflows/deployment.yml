@@ -1,10 +1,21 @@
 name: Deploy
-on: deployment
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        default: production
+        required: true    
+      sha:
+        description: "Git SHA to Build"
+        required: false
+        type: string
 
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.deployment.environment }}
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v2
       # - name: start deployment
@@ -14,7 +25,7 @@ jobs:
       #     step: start
       #     env: ${{ github.event.deployment.environment }}
 
-      - name: 'Deploy ${{ github.event.deployment.environment }}'
+      - name: 'Deploy ${{ inputs.environment }}'
         run: |
           echo ${{ secrets.FOO }}
           echo ${{ github.sha }}
