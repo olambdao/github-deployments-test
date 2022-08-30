@@ -13,7 +13,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: go-semantic-release/action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: true
+      # - uses: go-semantic-release/action@v1
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     prerelease: true
+      - uses: cycjimmy/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
