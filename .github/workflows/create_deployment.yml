@@ -20,7 +20,7 @@ jobs:
       - uses: avakar/create-deployment@v1
         with:
           auto_merge: false
-          ref: ${{ github.ref || inputs.sha }}
+          ref: ${{ inputs.sha || github.ref }}
           environment: ${{ inputs.environment }}
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
