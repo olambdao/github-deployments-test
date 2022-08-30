@@ -5,6 +5,12 @@
     },
     "ci-condition": {
       "name": "default"
+    },
+    "changelog-generator": {
+      "name": "default",
+      "options": {
+        "emojis": "true"
+      }
     }
   }
 }
