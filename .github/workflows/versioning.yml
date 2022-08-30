@@ -18,5 +18,8 @@ jobs:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     prerelease: true
       - uses: cycjimmy/semantic-release-action@v3
+        with:
+          # You can specify specifying version range for the extra plugins if you prefer.
+          extra_plugins: '@semantic-release/git'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
