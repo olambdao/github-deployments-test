@@ -1,0 +1,12 @@
+name: Test Deployment
+on: deployment
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.deployment.environment }}
+    steps:
+      - name: 'Deploy ${{ github.event.deployment.environment }}'
+        run: |
+          echo ${{ secrets.FOO }}
+          echo ${{ github.sha }}
