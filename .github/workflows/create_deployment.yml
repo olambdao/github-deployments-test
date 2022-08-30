@@ -22,5 +22,6 @@ jobs:
           auto_merge: false
           ref: ${{ inputs.sha || github.ref }}
           environment: ${{ inputs.environment }}
+          required_contexts: "" # To bypass checking entirely
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
