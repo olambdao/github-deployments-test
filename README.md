@@ -1,2 +1,2 @@
 # github-deployments-test
-Hello world!
+Hello world! go semantic-release-test
