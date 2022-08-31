@@ -46,5 +46,6 @@ jobs:
     uses: ./.github/workflows/foo.yml
 
   qwerty:
+    if: always()
     needs: post_test
     uses: ./.github/workflows/post_deploy.yml
