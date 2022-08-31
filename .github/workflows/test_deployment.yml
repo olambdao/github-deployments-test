@@ -29,7 +29,7 @@ jobs:
         with:
           step: finish
           status: ${{ job.status }}
-          env: ${{ github.event.deployment.environment }}
+          # env: ${{ github.event.deployment.environment }}
           deployment_id: ${{ github.event.deployment.id }}
 
   post_deploy:
