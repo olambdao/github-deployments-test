@@ -12,3 +12,4 @@ jobs:
           echo ${{ github.sha }}
           echo ${{ github.event.deployment.environment }}
           echo ${{ github.action_status }}
+          echo '${{ toJSON(github) }}'
