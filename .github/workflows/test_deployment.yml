@@ -2,6 +2,9 @@ name: Test Deployment
 on: deployment
 
 jobs:
+  inner_test:
+    uses: ./.github/workflows/foo.yml
+
   deployment:
     runs-on: ubuntu-latest
     environment: ${{ github.event.deployment.environment }}
@@ -27,3 +30,11 @@ jobs:
           status: ${{ job.status }}
           env: ${{ github.event.deployment.environment }}
           deployment_id: ${{ github.event.deployment.id }}
+
+  post_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Print"
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.action_status }}

@@ -1,0 +1,22 @@
+name: Inner Tests
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: "Inner Tests"
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.event.deployment.environment }}
+
+      - name: update deployment status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          status: ${{ job.status }}
+          env: ${{ github.event.deployment.environment }}
+          deployment_id: ${{ github.event.deployment.id }}
