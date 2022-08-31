@@ -6,6 +6,7 @@ jobs:
     uses: ./.github/workflows/foo.yml
 
   deployment:
+    needs: inner_test
     runs-on: ubuntu-latest
     environment: ${{ github.event.deployment.environment }}
     steps:
@@ -32,6 +33,7 @@ jobs:
           deployment_id: ${{ github.event.deployment.id }}
 
   post_deploy:
+    needs: deployment
     runs-on: ubuntu-latest
     steps:
       - name: "Print"
