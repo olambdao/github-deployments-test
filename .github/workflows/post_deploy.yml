@@ -1,0 +1,43 @@
+name: Post deployment
+
+on:
+  workflow_call:
+
+jobs:
+  if-success:
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Print"
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.action_status }}    
+          echo '${{ toJSON(job) }}'
+
+      - name: update deployment status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          status: "success"
+          env: ${{ github.event.deployment.environment }}
+          deployment_id: ${{ github.event.deployment.id }}
+
+  if-failure:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Print"
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.action_status }}   
+          echo '${{ toJSON(job) }}'
+
+      - name: update deployment status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          status: "failure"
+          env: ${{ github.event.deployment.environment }}
+          deployment_id: ${{ github.event.deployment.id }}
