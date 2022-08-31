@@ -44,3 +44,13 @@ jobs:
   post_test:
     needs: post_deploy
     uses: ./.github/workflows/foo.yml
+
+  qwerty:
+    if: ${{ failure() }}  
+    needs: post_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Print"
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.action_status }}
