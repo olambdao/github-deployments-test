@@ -22,14 +22,15 @@ jobs:
         run: |
           echo ${{ secrets.FOO }}
           echo ${{ github.sha }}
+          echo '${{ toJSON(github) }}'
 
       - name: update deployment status
         uses: bobheadxi/deployments@v1
-        if: always()
+        if: always() && github.event == 'deployment'
         with:
           step: finish
           status: ${{ job.status }}
-          # env: ${{ github.event.deployment.environment }}
+          env: ${{ github.event.deployment.environment }}
           deployment_id: ${{ github.event.deployment.id }}
 
   post_deploy:
