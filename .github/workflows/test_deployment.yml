@@ -26,7 +26,7 @@ jobs:
 
       - name: update deployment status
         uses: bobheadxi/deployments@v1
-        if: always() && github.event == 'deployment'
+        if: always() && github.event_name == 'deployment'
         with:
           step: finish
           status: ${{ job.status }}
