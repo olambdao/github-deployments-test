@@ -2,5 +2,13 @@ envs:
   - name: dev
     auto_merge: false
     required_contexts: [] # To bypass checking entirely
-    dynamic_payload:
+    payload:
       overlay: dev
+
+  - name: prod
+    auto_merge: false
+    required_contexts:
+      - test
+      - foo
+    payload:
+      overlay: prod
