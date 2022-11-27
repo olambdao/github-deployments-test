@@ -24,4 +24,4 @@ jobs:
           environment: ${{ inputs.environment }}
           required_contexts: "" # To bypass checking entirely
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
